@@ -1,11 +1,11 @@
 import { weightedRandomTile } from '../modules/tile-utils.js';
 import { Entity } from '../modules/Entity.js';
-import { groundLayer} from '../js/tilemaps/groundLayer.js'
-import { groundLayer2} from '../js/tilemaps/groundLayer2.js'
-import { obstacleLayer} from '../js/tilemaps/obstacleLayer.js'
-import { decorLayer} from '../js/tilemaps/decorLayer.js'
-import { building_blue_big, building_blue_small } from '../js/tilemaps/buildingLayouts.js';
-import { placeBuildingTiles } from '../modules/placeBuildingTiles.js';
+
+import { loadStage0 } from '../js/Stages/Stage0.js';
+import { TreeManager } from '../js/Managers/TreeManager.js';
+import { CropManager } from '../js/Managers/CropManager.js';
+import { BuildingManager } from '../js/Managers/BuildingManager.js';
+import { StageManager } from '../js/Managers/StageManager.js';
 
 export class NewWorldScene extends Phaser.Scene {
     constructor() {
@@ -15,20 +15,20 @@ export class NewWorldScene extends Phaser.Scene {
     preload() {
         // Load player
 
-function decrementArray(arr) {
-  return arr.map(n => n - 1);
-}
+    function decrementArray(arr) {
+    return arr.map(n => n - 1);
+    }
 
-// Example usage:
-const input = [0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 0, 0, 0,
-0, 0, 0, 0, 2166, 0, 0,
-0, 0, 0, 0, 2163, 2230, 0,
-0, 0, 0, 0, 2227, 2163, 0,
-0, 0, 0, 0, 0, 0, 0
+    // Example usage:
+    const input = [0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 2166, 0, 0,
+    0, 0, 0, 0, 2163, 2230, 0,
+    0, 0, 0, 0, 2227, 2163, 0,
+    0, 0, 0, 0, 0, 0, 0
 
-]; // replace this with your array
-console.log(decrementArray(input));
+    ]; // replace this with your array
+    //console.log(decrementArray(input));
 
 
         // Body and Hair for idle and run
@@ -42,7 +42,6 @@ console.log(decrementArray(input));
         });
 
         this.hairstyles = ["bowl","curly","long","mop","short","spikey"];
-
         this.hairstyles.forEach(hair => {
           this.load.spritesheet(`${hair}hair_idle`, `assets/Sunnyside_World_Assets/Characters/Human/IDLE/${hair}hair_idle_strip9.png`, {
               frameWidth: 96,
@@ -53,7 +52,6 @@ console.log(decrementArray(input));
               frameHeight: 64
           });
         });
-
         this.load.spritesheet('tools_idle', 'assets/Sunnyside_World_Assets/Characters/Human/IDLE/tools_idle_strip9.png', {
             frameWidth: 96,
             frameHeight: 64
@@ -63,11 +61,8 @@ console.log(decrementArray(input));
             frameHeight: 64
         });
 
-
-
         // Load tileset images
         this.load.image('tiles-grass-dirt', 'assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png');
-
 
         // Load TSX files as text
         this.load.text('ground-tsx', 'assets/tileSets/SunnySide_WorldMain.tsx');
@@ -78,8 +73,6 @@ console.log(decrementArray(input));
         });
 
         this.load.image('UI_Pointer_white', 'assets/Pointer_white.png');
-
-
     }
 
     create() {
@@ -163,124 +156,20 @@ console.log(decrementArray(input));
         this.cropLayerBottom.setDepth(240); 
         this.cropLayerTop.setDepth(250);   
 
-        this.populateLayerFromArray(this.groundLayer, groundLayer);
-        this.populateLayerFromArray(this.groundLayer2, groundLayer2);
-        this.populateLayerFromArray(this.obstacleLayer, obstacleLayer);
-        this.populateLayerFromArray(this.decorLayer, decorLayer);
 
-this.enterableBuildings = [];
- this.walkBehindZones = [];
+        this.stageManager = new StageManager(this);
+        this.treeManager = new TreeManager(this);
+        this.cropManager = new CropManager(this);
+        this.buildingManager = new BuildingManager(this);
+        this.enterableBuildings = [];
+        this.walkBehindZones = [];
+        // Load stage-specific placement
 
-        //placeBuildingTiles(this, 23, 1, building_blue_small);
-        //this.markBuildingObstacles(building_blue_small, 23, 1);
-        //this.markWalkBehindDepthZones(building_blue_small, 23, 1,5);
-
-
-        //placeBuildingTiles(this, 5, 1, building_blue_big);
-        //this.markBuildingObstacles(building_blue_big, 5, 1);
-        //this.markWalkBehindDepthZones(building_blue_big, 5, 1,6);
-
-        //this.placeEnterableBuilding(5, 1, building_blue_big);
-
-       
-        
-        
-
-        this.placeTreeSprite(1, 2, 0, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(3, 2, 1, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(2, 3, 2, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(4, 3, 2, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(6, 2, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(21, 3, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(30, 4, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(13, 3, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(14, 4, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(15, 2, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(17, 4, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeTreeSprite(18, 3, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
+        loadStage0(this);
 
 
-        this.placeTreeSprite(20, 5, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
 
 
-        this.placeTreeSprite(23, 15, 3, {
-          behindRows: 2,
-          blockRows: 1,
-          allowInFront: true
-        });
-
-        this.placeCropTile(0, 6, 1075, 1139); 
-        this.placeCropTile(0, 7, 1075, 1139); 
-        this.placeCropTile(0, 8, 1075, 1139);
-        this.placeCropTile(0, 9, 1075, 1139);
-
-        this.placeCropTile(1, 6, 1075, 1139); 
-        this.placeCropTile(1, 7, 1075, 1139); 
-
-        this.placeCropTile(1, 9, 1075, 1139);
 
 
 
@@ -304,7 +193,7 @@ this.enterableBuildings = [];
         this.createBodyAnimations(this, 'tools', 9, 8);
 
 
-this.initBuildingManager();
+
 
         const spawn1 = this.findNearestWalkableTile(10, 7);
         const player1 = new Entity(this, spawn1.x, spawn1.y, {
@@ -470,28 +359,7 @@ entity.sprite.setDepth(depth);
       }
   }
 
-this.buildings.forEach(building => {
-    const bounds = {
-        x: building.x * 16,
-        y: building.y * 16,
-        width: building.width * 16,
-        height: building.height * 16
-    };
-
-    const anyInside = this.entities.some(e =>
-        Phaser.Geom.Rectangle.Contains(
-            new Phaser.Geom.Rectangle(bounds.x, bounds.y, bounds.width, bounds.height),
-            e.sprite.x,
-            e.sprite.y
-        )
-    );
-
-    if (anyInside && building.visible && !building.isFadingOut) {
-        this.enterBuilding(building);
-    } else if (!anyInside && !building.visible && !building.isFadingOut) {
-        this.exitBuilding(building);
-    }
-});
+    this.buildingManager.update();
 
 
 
@@ -518,149 +386,10 @@ createBodyAnimations(scene, keyPrefix, idleFrames, runFrames) {
     }
 }
 
-populateLayerFromArray(layer, array) {
-    for (let y = 0; y < array.length; y++) {
-        for (let x = 0; x < array[y].length; x++) {
-            const tileId = array[y][x];
-            if (tileId !== -1) {
-                layer.putTileAt(tileId, x, y);
-            }
-        }
-    }
-}
-
-populateLayoutToLayer(layer, tileArray, startX, startY) {
-    for (let y = 0; y < tileArray.length; y++) {
-        for (let x = 0; x < tileArray[y].length; x++) {
-            const tileId = tileArray[y][x];
-            if (tileId !== -1) {
-                layer.putTileAt(tileId, startX + x, startY + y);
-            }
-        }
-    }
-}
-
-
-placeTreeSprite(tileX, tileY, frame = 0, options = { behindRows: 2, blockRows: 2, allowInFront: false }) {
-  const tileSize = 16;
-  const worldX = tileX * tileSize;
-  const worldY = tileY * tileSize;
-
-
-  const sprite = this.add.sprite(worldX, worldY, 'trees', frame);
-  sprite.setOrigin(0.5, 0.5); 
-  sprite.setDepth(worldY + sprite.displayHeight / 2); 
-  sprite.allowInFront = options.allowInFront;
-
-  this.treeGroup.add(sprite);
-
-  const visualBottom = worldY + sprite.displayHeight / 2;
-  const zoneHeight = tileSize * options.behindRows;
-  const zoneY = visualBottom - zoneHeight;
-
-  this.walkBehindZones.push({
-    x: worldX - tileSize, 
-    y: zoneY,
-    width: tileSize * 2,
-    height: zoneHeight,
-    type: 'tree'
-  });
 
 
 
-  if (!options.allowInFront) {
-    for (let dx = 0; dx < 2; dx++) {
-      for (let dy = 0; dy < options.blockRows; dy++) {
-        this.treeCollisionLayer.putTileAt(1, tileX + dx, tileY - dy);
-      }
-    }
-  }
-}
 
-initBuildingManager() {
-    this.buildings = [];
-
-    this.registerBuilding({
-        x: 5,
-        y: 1,
-        layout: building_blue_big
-    });
-
-    this.registerBuilding({
-        x: 23,
-        y: 1,
-        layout: building_blue_small
-    });
-}
-
-registerBuilding({ x, y, layout }) {
-    const building = {
-        x, y,
-        width: layout.tiles[0].length,
-        height: layout.tiles.length,
-        layout,
-        visible: true,
-        isFadingOut: false,
-    };
-    this.buildings.push(building);
-    this.placeEnterableBuilding(x, y, layout); 
-
-}
-
-placeEnterableBuilding(startX, startY, layout) {
-    const tileSize = 16;
-    const worldX = startX * tileSize;
-    const worldY = startY * tileSize;
-
-    // Store metadata
-    const footprint = {
-        x: worldX,
-        y: worldY,
-        width: layout.tiles[0].length * tileSize,
-        height: layout.tiles.length * tileSize,
-        tiles: layout.tiles,
-        layout,
-        startX,
-        startY,
-        active: true
-    };
-
-    // Place exterior
-    this.populateLayoutToLayer(this.buildingLayer, layout.tiles, startX, startY);
-    this.buildingLayer_inside_floor.setAlpha(0);
-    this.buildingLayer_inside.setAlpha(0);
-    this.buildingLayer_inside_decor.setAlpha(0);
-    this.buildingLayer_inside_decor2.setAlpha(0);
-    // Store collision
-    this.markBuildingObstacles(layout, startX, startY);
-
-    // Mark walk-behind zones
-    this.markWalkBehindDepthZones(layout, startX, startY, 6);
-
-    // Only place interior if defined
-    if (layout.tiles_inside_floor) {
-        this.enterableBuildings.push(footprint);
-        this.populateLayoutToLayer(this.buildingLayer_inside_floor, layout.tiles_inside_floor, startX, startY);  
-        this.populateLayoutToLayer(this.buildingLayer_inside_decor, layout.tiles_inside_decor1 || [], startX, startY);
-        this.populateLayoutToLayer(this.buildingLayer_inside_decor2, layout.tiles_inside_decor2 || [], startX, startY);
-        this.populateLayoutToLayer(this.buildingLayer_inside, layout.tiles_inside, startX, startY);
-    }
-}
-
-
-markBuildingObstacles(layout, startX, startY) {
-    const tiles = layout.tiles;
-    const rule = layout.obstacleRule || (() => false); 
-    const doors = layout.doors || [];
-    for (let y = 0; y < tiles.length; y++) {
-        for (let x = 0; x < tiles[y].length; x++) {
-          const isDoor = doors.some(d => d.x === x && d.y === y);
-          if (!isDoor && rule(x, y, tiles)) {
-            this.buildingCollisionLayer.putTileAt(1, startX + x, startY + y); 
-          }
-        }
-    }
-}
 
 fadeLayer(layer, alpha, duration = 300) {
     this.tweens.add({
@@ -670,137 +399,6 @@ fadeLayer(layer, alpha, duration = 300) {
         ease: 'Linear'
     });
 }
-
-hideBuildingExterior(footprint) {
-  console.log("HIDE?");
-    const { tiles, startX, startY } = footprint;
-    for (let y = 0; y < tiles.length; y++) {
-        for (let x = 0; x < tiles[y].length; x++) {
-            this.buildingLayer.removeTileAt(startX + x, startY + y);
-        }
-    }
-    // Optional: remove collision
-    for (let y = 0; y < tiles.length; y++) {
-        for (let x = 0; x < tiles[y].length; x++) {
-            this.buildingCollisionLayer.removeTileAt(startX + x, startY + y);
-        }
-    }
-}
-
-restoreBuildingExterior(footprint) {
-    this.populateLayoutToLayer(this.buildingLayer, footprint.layout.tiles, footprint.startX, footprint.startY);
-    this.markBuildingObstacles(footprint.layout, footprint.startX, footprint.startY);
-}
-
-enterBuilding(building) {
-    if (!building.layout.tiles_inside || building.isFadingOut) return;
-
-    const duration = 300; // milliseconds
-    const tilesToRemove = [];
-
-    for (let y = 0; y < building.layout.tiles.length; y++) {
-        for (let x = 0; x < building.layout.tiles[0].length; x++) {
-            const tile = this.buildingLayer.getTileAt(building.x + x, building.y + y);
-            if (tile) {
-                tile.alpha = 1;
-                tilesToRemove.push({ x: building.x + x, y: building.y + y });
-            }
-        }
-    }
-
-    console.log("FADE", building.isFadingOut);
-    building.isFadingOut = true;
-    console.log("FADE", building.isFadingOut);
-    // Animate alpha fade-out on the tile layer
-    this.tweens.add({
-        targets: tilesToRemove.map(({ x, y }) => this.buildingLayer.getTileAt(x, y)),
-        alpha: 0,
-        duration,
-        ease: 'Linear',
-        onComplete: () => {
-          console.log("COMPLETE");
-            // After fading, remove tiles and collisions
-            for (const { x, y } of tilesToRemove) {
-                this.buildingLayer.removeTileAt(x, y);
-                this.buildingCollisionLayer.removeTileAt(x, y);
-                building.visible = false;
-                building.isFadingOut = false;
-            }
-        }
-    });
-    
-    // Draw interior floor
-    this.buildingLayer_inside_floor.setAlpha(1);
-    this.buildingLayer_inside.setAlpha(1);
-    this.buildingLayer_inside_decor.setAlpha(1);
-    this.buildingLayer_inside_decor2.setAlpha(1);
-   
-    /*
-    this.fadeLayer(this.buildingLayer_inside_floor, 1,1);
-    this.fadeLayer(this.buildingLayer_inside, 1,1);
-    this.fadeLayer(this.buildingLayer_inside_decor, 1,1);
-    this.fadeLayer(this.buildingLayer_inside_decor2, 1,1);
-    */
-    // Force pathfinder to rebuild
-    this.entities.forEach(e => { e.gridGenerated = false; });
-
-    
-}
-
-exitBuilding(building) {
-    // Check for entities still inside
-    const tileSize = 16;
-    const worldX = building.x * tileSize;
-    const worldY = building.y * tileSize;
-    const width = building.width * tileSize;
-    const height = building.height * tileSize;
-
-    const anyoneInside = this.entities.some(e => {
-        return (
-            e.sprite.x >= worldX &&
-            e.sprite.x <= worldX + width &&
-            e.sprite.y >= worldY &&
-            e.sprite.y <= worldY + height
-        );
-    });
-
-    if (anyoneInside) return; // defer restoration
-
-    // Restore outside
-    this.populateLayerFromArrayOffset(this.buildingLayer, building.layout.tiles, building.x, building.y);
-    this.markBuildingObstacles(building.layout, building.x, building.y);
-    this.buildingLayer.setAlpha(.5);
-    // Remove inside tiles
-  this.fadeLayer(this.buildingLayer_inside_floor, 0);
-  this.fadeLayer(this.buildingLayer_inside, 0);
-  this.fadeLayer(this.buildingLayer_inside_decor, 0);
-  this.fadeLayer(this.buildingLayer_inside_decor2, 0);
-  // Force pathfinder to rebuild
-  this.entities.forEach(e => { e.gridGenerated = false; });
-
-    building.visible = true;
-    this.fadeLayer(this.buildingLayer, 1); // fade building exterior in again
-}
-
-populateLayerFromArrayOffset(layer, array, startX, startY) {
-    for (let y = 0; y < array.length; y++) {
-        for (let x = 0; x < array[y].length; x++) {
-            const tileId = array[y][x];
-            if (tileId !== -1) {
-                layer.putTileAt(tileId, startX + x, startY + y);
-            }
-        }
-    }
-}
-
-clearLayerArea(layer, startX, startY, width, height) {
-    for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-            layer.removeTileAt(startX + x, startY + y);
-        }
-    }
-}
-
 
 
 markWalkBehindDepthZones(layout, startX, startY, depthVal) {
@@ -842,25 +440,6 @@ markWalkBehindDepthZones(layout, startX, startY, depthVal) {
 
   
 }
-
-placeCropTile(tileX, tileY, topTileIndex, bottomTileIndex, options = { behindRows: 1 }) {
-  const tileSize = 16;
-  const worldX = tileX * tileSize;
-  const worldY = tileY * tileSize;
-
-  this.cropLayerBottom.putTileAt(bottomTileIndex, tileX, tileY);
-  this.cropLayerTop.putTileAt(topTileIndex, tileX, tileY - 1);
-
-  const zoneY = (tileY - options.behindRows) * tileSize;
-  this.walkBehindZones.push({
-    x: worldX,
-    y: zoneY,
-    width: tileSize,
-    height: tileSize * options.behindRows,
-    type: 'crop'
-  });
-}
-
 
 buildPathfindingGrid() {
     const grid = [];
