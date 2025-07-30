@@ -78,7 +78,7 @@ export class NewWorldScene extends Phaser.Scene {
     create() {
         this.cameraPanSpeed = 200; // Pixels per second
         const tileSize = 16;
-        const mapWidth = 42;
+        const mapWidth = 60;
         const mapHeight = 28;
 
         this.selectionPointer = this.add.image(0, 0, 'UI_Pointer_white');
@@ -218,14 +218,18 @@ export class NewWorldScene extends Phaser.Scene {
 
         this.physics.world.setBounds(0, 0, mapWidth * tileSize, mapHeight * tileSize);
         this.cameras.main.setZoom(2);
-        this.cameras.main.setScroll(this.selectedEntity.sprite.x - this.cameras.main.width / 2, this.selectedEntity.sprite.y - this.cameras.main.height / 2);
+        // Start camera from top-left corner
+        // With zoom, we need to account for the viewport size
+        const viewportWidth = this.cameras.main.width / 2; // Divided by zoom
+        const viewportHeight = this.cameras.main.height / 2; // Divided by zoom
+        this.cameras.main.centerOn(viewportWidth / 2, viewportHeight / 2);
 
-        const cameraPadding = 48;
+        // Set camera bounds to exactly match the world size (no padding)
         this.cameras.main.setBounds(
-            -cameraPadding,
-            -cameraPadding,
-            mapWidth * tileSize + cameraPadding * 2,
-            mapHeight * tileSize + cameraPadding * 2
+            0,
+            0,
+            mapWidth * tileSize,
+            mapHeight * tileSize
         );
 
 

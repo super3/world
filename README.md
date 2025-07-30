@@ -20,12 +20,17 @@ A browser-based pixel art colony simulation game built with Phaser.js, inspired 
 
 2. **Run locally**:
    ```bash
+   npm start
+   ```
+   This will start a local server on port 8000 and automatically open the game in your browser.
+
+3. **Alternative methods**:
+   ```bash
    python -m http.server 8000
    # or
-   npx http-server
+   npx http-server -p 8000
    ```
-
-3. **Open** `http://localhost:8000` in your browser
+   Then open `http://localhost:8000/game.html` in your browser
 
 ## Controls
 

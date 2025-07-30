@@ -3,8 +3,8 @@
 import { NewWorldScene } from './scenes/NewWorldScene.js';
 const config = {
     type: Phaser.AUTO,
-    width: 672,
-    height: 448,
+    width: window.innerWidth,
+    height: window.innerHeight,
     parent: 'game-container',
     physics: {
         default: 'arcade',
@@ -15,9 +15,13 @@ const config = {
     pixelArt: true,
     scene: [NewWorldScene],
     scale: {
-        mode: Phaser.Scale.NONE,
-
+        mode: Phaser.Scale.NONE
     }
 };
 
 const game = new Phaser.Game(config);
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    game.scale.resize(window.innerWidth, window.innerHeight);
+});
