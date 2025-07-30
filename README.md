@@ -4,10 +4,11 @@ A browser-based pixel art colony simulation game built with Phaser.js, inspired 
 
 ## Features
 
-- **Procedural World Generation**: 100x100 tile maps with Perlin noise terrain
-- **Pathfinding**: A* navigation around obstacles  
+- **Tile-based World**: 60x28 tile maps with pre-designed layouts
+- **Pathfinding**: A* navigation around obstacles using EasyStar.js
 - **Pixel Art Graphics**: Using the "Sunnyside World" asset pack
-- **Auto-tiling**: Seamless grass-to-dirt terrain transitions
+- **Multiple Entities**: Control characters with different hairstyles
+- **Building System**: Pre-placed buildings and structures
 
 ## Getting Started
 
@@ -28,7 +29,6 @@ A browser-based pixel art colony simulation game built with Phaser.js, inspired 
 - **Left Mouse**: Select character
 - **Right Mouse**: Move selected character  
 - **WASD/Arrows**: Pan camera
-- **O/I/P Keys**: Debug overlays
 
 ## License
 
