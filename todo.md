@@ -32,12 +32,12 @@
 - [ ] Consider separate repository for source art files
 
 ## 6. Version Control Improvements
-- [ ] Create `.gitignore` file with:
-  - [ ] `node_modules/`
-  - [ ] `.DS_Store`
-  - [ ] `*.log`
-  - [ ] `.env`
-  - [ ] `.vscode/` (unless sharing settings)
+- [x] Create `.gitignore` file with:
+  - [x] `node_modules/`
+  - [x] `.DS_Store`
+  - [x] `*.log`
+  - [x] `.env`
+  - [x] `.vscode/` (unless sharing settings)
 
 ## 7. Configuration & Documentation
 - [ ] Add `jsconfig.json` for better IDE support
