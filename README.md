@@ -1,4 +1,4 @@
-# Colony Sim
+# World
 
 A browser-based pixel art colony simulation game built with Phaser.js, inspired by Rimworld.
 
@@ -13,8 +13,7 @@ A browser-based pixel art colony simulation game built with Phaser.js, inspired 
 
 1. **Clone and install**:
    ```bash
-   git clone https://github.com/super3/world
-   cd world
+   git clone https://github.com/super3/world && cd world
    npm install
    ```
 
