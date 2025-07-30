@@ -6,7 +6,7 @@ A browser-based pixel art colony simulation game built with Phaser.js, inspired 
 
 - **Procedural World Generation**: 100x100 tile maps with Perlin noise terrain
 - **Pathfinding**: A* navigation around obstacles  
-- **Pixel Art Graphics**: Using the "Little Dreamyland Asset Pack"
+- **Pixel Art Graphics**: Using the "Sunnyside World" asset pack
 - **Auto-tiling**: Seamless grass-to-dirt terrain transitions
 
 ## Getting Started
@@ -24,14 +24,6 @@ A browser-based pixel art colony simulation game built with Phaser.js, inspired 
    ```
    This will start a local server on port 8000 and automatically open the game in your browser.
 
-3. **Alternative methods**:
-   ```bash
-   python -m http.server 8000
-   # or
-   npx http-server -p 8000
-   ```
-   Then open `http://localhost:8000/game.html` in your browser
-
 ## Controls
 
 - **Left Mouse**: Select character
@@ -41,4 +33,4 @@ A browser-based pixel art colony simulation game built with Phaser.js, inspired 
 
 ## License
 
-MIT License. Graphics from [Little Dreamyland Asset Pack](https://starmixu.itch.io/little-dreamyland-asset-pack) by StarMixu.
+MIT License. Graphics from [Sunnyside World](https://danieldiggle.itch.io/sunnyside) by Daniel Diggle.
