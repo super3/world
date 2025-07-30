@@ -4,7 +4,7 @@
   "description": "Colony building simulation game",
   "main": "src/main.js",
   "scripts": {
-    "start": "npx http-server -p 8000 -o /game.html"
+    "start": "npx http-server -p 8000 -o"
   },
   "dependencies": {
     "noisejs": "^2.1.0",

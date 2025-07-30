@@ -1,293 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ColonySim - Build Your Colony</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="./phaser.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/easystarjs@0.4.4/bin/easystar-0.4.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.js"></script>
-    <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
-</head>
-<body class="index-page">
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="animated-bg">
-            <!-- Animated pixels will be added via JavaScript -->
-        </div>
-        <div class="hero-content">
-            <div class="hero-left">
-                <h1>ColonySim</h1>
-                <p>Build your colony, manage resources, and create a thriving settlement in this immersive simulation game.</p>
-                <div class="email-form">
-                    <h3>Early Access — 1 future citizens waiting</h3>
-                    <form action="https://app.kit.com/forms/8269255/subscriptions" id="emailForm" class="seva-form formkit-form" method="post" data-sv-form="8269255" data-uid="39b1e8f756" data-format="inline" data-version="5">
-                        <ul class="formkit-alert formkit-alert-error" data-element="errors" data-group="alert" style="display: none;"></ul>
-                        <div class="form-group formkit-fields" data-element="fields">
-                            <input type="email" name="email_address" class="email-input formkit-input" placeholder="Enter your email address" required>
-                            <button type="submit" class="btn btn-primary formkit-submit" data-element="submit">
-                                <span>Join Waitlist</span>
-                            </button>
-                        </div>
-                    </form>
-                    <div id="formMessage" class="form-message"></div>
-                </div>
-            </div>
-            <div class="game-preview">
-                <div class="preview-header">
-                    <div class="preview-header-left">LIVE CAMERA</div>
-                    <div class="viewer-count">1 viewer</div>
-                </div>
-                <div id="game-preview-container"></div>
-            </div>
-        </div>
-        <div class="scroll-indicator" onclick="window.scrollTo({ top: document.querySelector('.devblog').offsetTop - 160, behavior: 'smooth' })">
-            <span>Devlog</span>
-        </div>
-    </section>
-
-    <!-- Devblog Section -->
-    <section class="devblog">
-        <div class="devblog-container">
-            <div class="blog-posts">
-                <article class="blog-post">
-                    <time datetime="2025-01-23">January 23, 2025</time>
-                    <h3>World Generation System</h3>
-                    <p>Implemented procedural world generation using Perlin noise for natural terrain creation. Each new game features unique landscapes with varied terrain types and resource distributions.</p>
-                </article>
-                
-                <article class="blog-post">
-                    <time datetime="2025-01-22">January 22, 2025</time>
-                    <h3>Building System Foundation</h3>
-                    <p>Added the core building placement system. Players can now construct various structures to develop their colony, with tile-based placement and validation.</p>
-                </article>
-                
-                <article class="blog-post">
-                    <time datetime="2025-01-21">January 21, 2025</time>
-                    <h3>Resource Management</h3>
-                    <p>Introduced resource gathering and management mechanics. Colonists can now collect wood, stone, and other materials needed for construction and survival.</p>
-                </article>
-                
-                <article class="blog-post">
-                    <time datetime="2025-01-20">January 20, 2025</time>
-                    <h3>Colony Simulation Launch</h3>
-                    <p>Initial release of ColonySim! Start with a small group of colonists and build your settlement from the ground up in this new colony building simulation.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <footer style="position: relative; text-align: center; padding: 3rem 1rem 2rem; font-size: 0.85rem; background: transparent; z-index: 10;">
-        Made with ❤️ by <a href="https://twitter.com/super3" target="_blank" style="color: var(--accent); text-decoration: none; transition: color 0.2s ease;">super3</a>
-    </footer>
-
-
-    <script>
-        // ConvertKit form configuration (no API key needed)
-        const CONVERTKIT_FORM_ID = '8269255';
-        
-        // Load subscriber count from static file (updated by GitHub Actions)
-        let subscriberCount = 1; // Default fallback
-        
-        // Display current subscriber count
-        function updateSubscriberDisplay(count) {
-            const counterElement = document.querySelector('.email-form h3');
-            if (counterElement) {
-                counterElement.textContent = `Early Access — ${count} future citizens waiting`;
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ColonySim</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2280%22>🌐</text></svg>">
+        <style>
+            /* Reset CSS: Please avoid making changes here unless you know what you're doing :) */
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
-        }
-        
-        // Fetch real subscriber count from Gist
-        const GIST_ID = 'd44a379e8e75c51d4651288c5785748f';
-        
-        if (GIST_ID !== 'YOUR_GIST_ID') {
-            fetch(`https://gist.githubusercontent.com/super3/${GIST_ID}/raw/subscriber-count.json`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.count) {
-                        subscriberCount = data.count;
-                        updateSubscriberDisplay(subscriberCount);
-                    }
-                })
-                .catch(() => {
-                    // If fetch fails, use default count
-                    updateSubscriberDisplay(subscriberCount);
-                });
-        } else {
-            // Use default count until Gist ID is configured
-            updateSubscriberDisplay(subscriberCount);
-        }
-        
-        // Track if form was submitted
-        let formSubmitted = false;
-        
-        // Check if ConvertKit loaded properly
-        window.addEventListener('load', function() {
-            const form = document.getElementById('emailForm');
-            if (form) {
-                // Track form submission
-                form.addEventListener('submit', function(e) {
-                    formSubmitted = true;
-                    const email = form.querySelector('input[type="email"]').value;
-                    
-                    // Show success after a delay if ConvertKit doesn't respond
-                    // (This handles the case where analytics are blocked but form still works)
-                    setTimeout(function() {
-                        if (formSubmitted) {
-                            showMessage('Welcome to the waitlist! Check your email for confirmation.', 'success');
-                            form.reset();
-                            subscriberCount++;
-                            updateSubscriberDisplay(subscriberCount);
-                            formSubmitted = false;
-                        }
-                    }, 3000);
-                });
-            }
-        });
-        
-        // Handle ConvertKit form success/error messages
-        window.addEventListener('message', function(e) {
-            if (e.data && e.data.formId === 8269255) {
-                if (e.data.type === 'success') {
-                    formSubmitted = false; // Cancel the timeout
-                    showMessage('Welcome to the waitlist! Check your email for confirmation.', 'success');
-                    // Increment counter locally after successful signup
-                    subscriberCount++;
-                    updateSubscriberDisplay(subscriberCount);
-                }
-            }
-        });
-
-        // Create animated background pixels
-        const animatedBg = document.querySelector('.animated-bg');
-        for (let i = 0; i < 50; i++) {
-            const pixel = document.createElement('div');
-            pixel.className = 'pixel';
-            pixel.style.left = Math.random() * 100 + '%';
-            pixel.style.top = Math.random() * 100 + '%';
-            pixel.style.animationDelay = Math.random() * 10 + 's';
-            pixel.style.animationDuration = (10 + Math.random() * 10) + 's';
-            animatedBg.appendChild(pixel);
-        }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-
-        function showMessage(text, type) {
-            const formMessage = document.getElementById('formMessage');
-            formMessage.textContent = text;
-            formMessage.className = `form-message ${type}`;
-            formMessage.style.display = 'block';
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                formMessage.style.display = 'none';
-            }, 5000);
-        }
-    </script>
     
-    <!-- Game Scripts -->
+            html, body {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
     
-    <script type="module">
-        // Import the game scene
-        import { NewWorldScene } from './src/scenes/NewWorldScene.js';
-        
-        // Initialize preview game
-        window.addEventListener('load', function() {
-            // Create a preview version of the game scene
-            class PreviewGameScene extends NewWorldScene {
-                create() {
-                    super.create();
-                    
-                    // Disable all inputs for the preview
-                    if (this.input.keyboard) {
-                        this.input.keyboard.enabled = false;
-                    }
-                    this.input.enabled = false;
-                    
-                    // Use the actual map dimensions from the scene
-                    const mapWidth = 42;
-                    const mapHeight = 28;
-                    const tileSize = 16;
-                    
-                    // Position camera up and to the left
-                    const centerX = mapWidth * tileSize / 2 - 200;
-                    const centerY = mapHeight * tileSize / 2 - 85;
-                    this.cameras.main.centerOn(centerX, centerY);
-                    
-                    // Set zoom to match the main game
-                    this.cameras.main.setZoom(2);
-                }
-                
-                update(time, delta) {
-                    // Run minimal update logic for preview
-                    // You can add simple animations or effects here
-                    super.update(time, delta);
-                }
+            body {
+                line-height: 1;
+                font-family: Arial, sans-serif;
+                background-color: #040218;
             }
-            
-            // Preview configuration
-            const previewConfig = {
-                type: Phaser.AUTO,
-                width: 400,
-                height: 300,
-                parent: 'game-preview-container',
-                backgroundColor: '#040218',
-                pixelArt: true,
-                physics: {
-                    default: 'arcade',
-                    arcade: {
-                        gravity: { y: 0 },
-                        debug: false
-                    }
-                },
-                scene: [PreviewGameScene],
-                scale: {
-                    mode: Phaser.Scale.NONE
-                },
-                input: {
-                    keyboard: {
-                        capture: [] // Don't capture any keys
-                    }
-                }
-            };
+    
+            ol, ul {
+                list-style: none;
+            }
+    
+            img, video {
+                max-width: 100%;
+                height: auto;
+                display: block;
+            }
+    
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
 
-            // Create the preview game
-            window.previewGame = new Phaser.Game(previewConfig);
-            
-            // Disable sound for preview
-            window.previewGame.sound.mute = true;
-            
-            // Ensure email input works properly
-            const emailInput = document.querySelector('.email-input');
-            if (emailInput) {
-                emailInput.addEventListener('focus', function(e) {
-                    // Disable Phaser keyboard when email input is focused
-                    if (window.previewGame && window.previewGame.scene.scenes[0]) {
-                        const scene = window.previewGame.scene.scenes[0];
-                        if (scene.input && scene.input.keyboard) {
-                            scene.input.keyboard.enabled = false;
-                        }
-                    }
-                    e.stopPropagation();
-                });
-                
-                emailInput.addEventListener('blur', function(e) {
-                    // Keep keyboard disabled even on blur
-                    e.stopPropagation();
-                });
+            #game-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
             }
-        });
-    </script>
-</body>
-</html>
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/easystarjs@0.4.4/bin/easystar-0.4.4.min.js"></script>
+
+    </head>
+    <body>
+        <div id="game-container" class="">
+            <div id="game-scaler"></div>
+        </div>
+        <script src="./phaser.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.js"></script>
+        <script type="module" src="./src/main.js"></script>
+        <script>
+            document.addEventListener('contextmenu', event => event.preventDefault());
+
+        </script>
+    </body>
+    </html>
