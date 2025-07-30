@@ -10,8 +10,8 @@
 - [ ] Move existing assets to appropriate subdirectories
 
 ## 2. Remove Unused NPCs
-- [ ] Verify if NPC images are used in game
-- [ ] Remove `assets/npc/` folder if unused (30 images total)
+- [x] Verify if NPC images are used in game
+- [x] Remove `assets/npc/` folder if unused (30 images total)
 
 ## 3. Clean Up Tileset Files
 - [ ] Decide whether to use Tiled editor `.tsx` files
@@ -30,6 +30,8 @@
 - [ ] Remove `Sunnyside_World_ExampleScene.png`
 - [ ] Move or remove `_Source/` folder with `.aseprite` files
 - [ ] Consider separate repository for source art files
+- [x] Remove unused Phaser demo assets (phaser.png, space.png, spaceship.png)
+- [x] Remove unused Dreamyland assets folder
 
 ## 6. Version Control Improvements
 - [x] Create `.gitignore` file with:
@@ -39,33 +41,21 @@
   - [x] `.env`
   - [x] `.vscode/` (unless sharing settings)
 
-## 7. Configuration & Documentation
-- [ ] Add `jsconfig.json` for better IDE support
-- [ ] Consider adding `CONTRIBUTING.md` for contribution guidelines
-- [ ] Update README with development setup instructions
-
-## 8. Asset Optimization
+## 7. Asset Optimization
 - [ ] Combine individual sprite frames into texture atlases
 - [ ] Optimize image file sizes
 - [ ] Consider using tools like TexturePacker
 
-## 9. Code Organization
+## 8. Code Organization
 - [ ] Move `perlin.js` to `src/vendor/` or `src/lib/`
-- [ ] Separate third-party code from project code
+- [x] Separate third-party code from project code (phaser.js moved to src/)
 - [ ] Consider using npm packages instead of vendored code where possible
 
-## 10. Build Process
-- [ ] Consider adding build tooling (Webpack/Vite) for:
-  - [ ] Module bundling
-  - [ ] Asset optimization
-  - [ ] Development hot-reload
-  - [ ] Production minification
-  - [ ] ES6+ transpilation
-- [ ] Add npm scripts for development and production builds
-
-## Additional Improvements
-- [ ] Add ESLint configuration for code consistency
-- [ ] Add Prettier for code formatting
-- [ ] Consider TypeScript for better type safety
-- [ ] Add unit tests for game logic
-- [ ] Implement CI/CD with GitHub Actions
+## Completed Outside of This List
+- [x] Removed unused style.css file
+- [x] Removed empty Sprites/ and Tileset/ folders from root
+- [x] Updated title from ColonySim to World
+- [x] Made game fullscreen and extended world width
+- [x] Updated README with accurate feature descriptions
+- [x] Removed unused landing page (index.html)
+- [x] Updated favicon to globe emoji
