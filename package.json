@@ -1,4 +1,11 @@
 {
+  "name": "colonysim",
+  "version": "1.0.0",
+  "description": "Colony building simulation game",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "npx http-server -p 8000 -o /game.html"
+  },
   "dependencies": {
     "noisejs": "^2.1.0",
     "simplex-noise": "^4.0.3"
