@@ -24,9 +24,9 @@ export class OverworldScene extends Phaser.Scene {
         this.load.image('tiles-decor', 'assets/Dreamyland_assets/Tileset/Tileset floor detail.png');
 
         // Load TSX files as text
-        this.load.text('ground-tsx', 'assets/tileSets/Ground.tsx');
-        this.load.text('obstacle-tsx', 'assets/tileSets/Obstacles.tsx');
-        this.load.text('decor-tsx', 'assets/tileSets/Decor.tsx');
+        this.load.text('ground-tsx', 'assets/tilesets/Ground.tsx');
+        this.load.text('obstacle-tsx', 'assets/tilesets/Obstacles.tsx');
+        this.load.text('decor-tsx', 'assets/tilesets/Decor.tsx');
 
         this.obstacleSpawnChance = 0.05;
         this.decorSpawnChance = 0.1;

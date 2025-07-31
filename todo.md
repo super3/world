@@ -1,13 +1,12 @@
 # Project Cleanup TODO
 
 ## 1. Consolidate Asset Organization
-- [ ] Create clear subdirectories in `assets/` folder:
-  - [ ] `assets/sprites/`
-  - [ ] `assets/tilesets/`
-  - [ ] `assets/maps/`
-  - [ ] `assets/ui/`
-  - [ ] `assets/npcs/`
-- [ ] Move existing assets to appropriate subdirectories
+- [x] Create clear subdirectories in `assets/` folder:
+  - [x] `assets/sprites/`
+  - [x] `assets/tilesets/`
+  - [x] `assets/maps/`
+  - [x] `assets/ui/`
+- [x] Move existing assets to appropriate subdirectories
 
 ## 2. Remove Unused NPCs
 - [x] Verify if NPC images are used in game
