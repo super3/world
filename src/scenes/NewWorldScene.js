@@ -65,10 +65,10 @@ export class NewWorldScene extends Phaser.Scene {
         });
 
         // Load tileset images
-        this.load.image('tiles-grass-dirt', basePath + 'assets/tilesets/spr_tileset_sunnysideworld_16px.png');
+        this.load.image('tiles-grass-dirt', basePath + 'assets/tileSets/spr_tileset_sunnysideworld_16px.png');
 
         // Load TSX files as text
-        this.load.text('ground-tsx', basePath + 'assets/tilesets/SunnySide_WorldMain.tsx');
+        this.load.text('ground-tsx', basePath + 'assets/tileSets/SunnySide_WorldMain.tsx');
 
         this.load.spritesheet('trees', basePath + 'assets/sprites/Plants/spr_deco_tree_01_strip4.png', {
             frameWidth: 32,
