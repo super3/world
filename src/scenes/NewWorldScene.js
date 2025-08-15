@@ -13,6 +13,9 @@ export class NewWorldScene extends Phaser.Scene {
     }
 
     preload() {
+        // Get the base path for assets
+        const basePath = window.ASSET_BASE_PATH || '/';
+        
         // Load player
 
     function decrementArray(arr) {
@@ -32,47 +35,47 @@ export class NewWorldScene extends Phaser.Scene {
 
 
         // Body and Hair for idle and run
-        this.load.spritesheet('base_idle', 'assets/sprites/Human/IDLE/base_idle_strip9.png', {
+        this.load.spritesheet('base_idle', basePath + 'assets/sprites/Human/IDLE/base_idle_strip9.png', {
             frameWidth: 96,
             frameHeight: 64
         });
-        this.load.spritesheet('base_run', 'assets/sprites/Human/RUN/base_run_strip8.png', {
+        this.load.spritesheet('base_run', basePath + 'assets/sprites/Human/RUN/base_run_strip8.png', {
             frameWidth: 96,
             frameHeight: 64
         });
 
         this.hairstyles = ["bowl","curly","long","mop","short","spikey"];
         this.hairstyles.forEach(hair => {
-          this.load.spritesheet(`${hair}hair_idle`, `assets/sprites/Human/IDLE/${hair}hair_idle_strip9.png`, {
+          this.load.spritesheet(`${hair}hair_idle`, basePath + `assets/sprites/Human/IDLE/${hair}hair_idle_strip9.png`, {
               frameWidth: 96,
               frameHeight: 64
           });
-          this.load.spritesheet(`${hair}hair_run`, `assets/sprites/Human/RUN/${hair}hair_run_strip8.png`, {
+          this.load.spritesheet(`${hair}hair_run`, basePath + `assets/sprites/Human/RUN/${hair}hair_run_strip8.png`, {
               frameWidth: 96,
               frameHeight: 64
           });
         });
-        this.load.spritesheet('tools_idle', 'assets/sprites/Human/IDLE/tools_idle_strip9.png', {
+        this.load.spritesheet('tools_idle', basePath + 'assets/sprites/Human/IDLE/tools_idle_strip9.png', {
             frameWidth: 96,
             frameHeight: 64
         });
-        this.load.spritesheet('tools_run', 'assets/sprites/Human/RUN/tools_run_strip8.png', {
+        this.load.spritesheet('tools_run', basePath + 'assets/sprites/Human/RUN/tools_run_strip8.png', {
             frameWidth: 96,
             frameHeight: 64
         });
 
         // Load tileset images
-        this.load.image('tiles-grass-dirt', 'assets/tilesets/spr_tileset_sunnysideworld_16px.png');
+        this.load.image('tiles-grass-dirt', basePath + 'assets/tilesets/spr_tileset_sunnysideworld_16px.png');
 
         // Load TSX files as text
-        this.load.text('ground-tsx', 'assets/tilesets/SunnySide_WorldMain.tsx');
+        this.load.text('ground-tsx', basePath + 'assets/tilesets/SunnySide_WorldMain.tsx');
 
-        this.load.spritesheet('trees', 'assets/sprites/Plants/spr_deco_tree_01_strip4.png', {
+        this.load.spritesheet('trees', basePath + 'assets/sprites/Plants/spr_deco_tree_01_strip4.png', {
             frameWidth: 32,
             frameHeight: 34
         });
 
-        this.load.image('UI_Pointer_white', 'assets/ui/Pointer_white.png');
+        this.load.image('UI_Pointer_white', basePath + 'assets/ui/Pointer_white.png');
     }
 
     create() {
